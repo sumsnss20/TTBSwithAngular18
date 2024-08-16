@@ -1,0 +1,74 @@
+<div class="main">
+    <!--Content Section Start-->
+    <div class="content">
+      <!--Train By Date Section Start-->
+      <div class="row">
+        <div class="col col-lg-6">
+          <div class="card">
+            <form>
+              <div class="row">
+                <h1 class="heading">Search By Train Stations</h1>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <label class="form-label labelText">From Station</label><br>
+                  <select [(ngModel)]="fromStationId" name="fromStationId" id="fromStationId" class="form-control">
+                    <option value="0">From Station</option>
+                    @for (station of stationList; track $index) {
+                      <option [value]="station.stationID">{{station.stationName}}</option>
+                    }
+                  </select>
+                </div>
+
+                <div class="col-lg-6">
+                  <label class="form-label labelText">To Station</label><br>
+                  <select [(ngModel)]="toStationId" name="toStationId" id="toStationId" class="form-control" >
+                    <option value="0">To Station</option>
+                    @for (station of stationList; track $index) {
+                      <option [value]="station.stationID">{{station.stationName}}</option>
+                    }
+                  </select>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <label class="form-label labelText" style="margin-top: 5px;">Date Of Travel</label>
+                  <input [(ngModel)]="dateOfTravel" name="dateOfTravel" id="dateOfTravel" value="dateOfTravel" type="date" class="form-control"/>
+                </div>
+              </div>
+  
+              <div class="row">
+                 <div class="d-flex justify-content-center mt-4 mx-4 mb-3 mb-lg-4">
+                  <button type="button" class="btn btn-primary" (click)="onSearch()">Search</button>
+                </div> 
+              </div>
+            </form>
+          </div>
+        </div>
+        <!--Train By Date Section End-->
+  
+        <!--Train By Number Section Start-->
+        <div class="col col-lg-6">
+          <div class="card">
+            <form>
+              <div class="row">
+                <h1 class="heading">Search By Train Number</h1>
+              </div>
+              <div class="col">
+                <label class="labelText">To Station</label><br>
+                <input type="text" name="trainNumber" value=" Train Number">
+                <button type="button" class="">Search</button>
+              </div>
+            </form>
+       
+          </div>
+        </div>
+         <!--Train By Number Section End-->
+      </div>
+      <!-- <div class="row">
+        <app-trainlists></app-trainlists>
+      </div> -->
+    </div>
+    <!--Content Section End-->
+  </div>
