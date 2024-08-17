@@ -1,3 +1,4 @@
+
 <div class="main">
   <!--Header Section Start-->
 <div class="navbar">
@@ -13,13 +14,13 @@
       <li class="nav-item"><a href="#" class="nav-link">About</a></li>
       <li class="nav-item"><a href="#" class="nav-link">Trains</a></li>
 
-      @if(loggedUser.passengerID == 0)
+      @if(loggedUserData.passengerID == 0)
       {
         <li class="nav-item"><a class="nav-link" (click)="openLogin()">Login</a></li>
         <li class="nav-item"><a class="nav-link" (click)="openSingup()">Sign-Up</a></li>
       }
      @else{
-      <li class="nav-item"><a class="nav-link">{{loggedUser.firstName}}</a></li>
+      <li class="nav-item"><a class="nav-link">{{loggedUserData.firstName}}</a></li>
       <li class="nav-item"><a class="nav-link" (click)="onLogOff()">Log OFF</a></li>
      }
       
@@ -29,7 +30,7 @@
 <!--Header Section END-->
 
 </div>
-<router-outlet/>
+
 
 
   <div class="modal" id="singUp">
@@ -56,7 +57,7 @@
           <div class="row">
             <div class="col-6">
               <label>Phone Number</label>
-              <input type="number" [(ngModel)]="registerObj.phone" class="form-control">
+              <input type="number" id="phone" value="phone" name="phone" [(ngModel)]="registerObj.phone" class="form-control">
             </div>
             <div class="col-6">
               <label>E-mail</label>
@@ -97,20 +98,22 @@
         <button type="button" class="btn-close" (click)="closeLogin()" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
+        <form>
         <div class="row">
           <div class="col-6">
             <label>User Name/E-mail</label>
-            <input type="text" [(ngModel)]="loginObj.phone" class="form-control">
+            <input type="text"  id="phone" value="phone" name="phone" [(ngModel)]="loginObj.phone" class="form-control">
           </div>
           <div class="col-6">
             <label>Password</label>
-            <input type="password" [(ngModel)]="loginObj.password" class="form-control">
+            <input type="password" [(ngModel)]="loginObj.fromStationId" class="form-control">
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" (click)="closeLogin()">Close</button>
           <button type="button" class="btn btn-success" (click)="onLogin()">Login</button>
         </div>
+      </form>
       </div>
     </div>
   </div>

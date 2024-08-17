@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HomeComponent } from "./Pages/home/home.component";
 import { SearchComponent } from './Pages/search/search.component';
@@ -10,7 +10,7 @@ import { json } from 'stream/consumers';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HomeComponent, SearchComponent, FormsModule],
+  imports: [FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -24,10 +24,18 @@ export class AppComponent {
     "phone": "",
     "password": ""
   }
-  loggedUser: Customer = new Customer();
-constructor(){
-  const localData =  localStorage.getItem('trainApp');
-}
+//   loggedUser: Customer = new Customer();
+// constructor(){
+//   const localData =  localStorage.getItem('trainApp');
+// }
+
+loggedUserData: any;
+  constructor() {
+    const localData = localStorage.getItem("trainApp");
+    if(localData != null) {
+      this.loggedUserData = JSON.stringify(localData);
+    }
+  }
 
   onRegister() {
     this.trainService.createNewCustomer(this.registerObj).subscribe((res:APIResponse)=> {
@@ -44,7 +52,7 @@ constructor(){
       if(res.result) {
         alert("Login Success");
         localStorage.setItem('trainApp', JSON.stringify(res.data));
-        this.loggedUser = res.data
+        this.loggedUserData = res.data
       } else{
         alert(res.message);
       }
@@ -52,7 +60,7 @@ constructor(){
   }
 
   onLogOff(){
-      this.loggedUser = new Customer();
+      this.loggedUserData = new Customer();
       localStorage.removeItem("")
   }
 
