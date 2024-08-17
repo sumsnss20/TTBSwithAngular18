@@ -10,59 +10,59 @@ import { json } from 'stream/consumers';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'MRTBS';
 
-  registerObj: Customer = new Customer();
-  trainService = inject(TrainService);
+  // registerObj: Customer = new Customer();
+  // trainService = inject(TrainService);
  
-  loginObj: any = {
-    "phone": "",
-    "password": ""
-  }
+  // loginObj: any = {
+  //   "phone": "",
+  //   "password": ""
+  // }
 //   loggedUser: Customer = new Customer();
 // constructor(){
 //   const localData =  localStorage.getItem('trainApp');
 // }
 
-loggedUserData: any;
-  constructor() {
-    const localData = localStorage.getItem("trainApp");
-    if(localData != null) {
-      this.loggedUserData = JSON.stringify(localData);
-    }
-  }
+// loggedUserData: any;
+//   constructor() {
+//     const localData = localStorage.getItem("trainApp");
+//     if(localData != null) {
+//       this.loggedUserData = JSON.stringify(localData);
+//     }
+//   }
 
-  onRegister() {
-    this.trainService.createNewCustomer(this.registerObj).subscribe((res:APIResponse)=> {
-      if(res.result){
-        alert("New Registeration Success");
-      } else{
-        alert(res.message);
-      }
-    })
-  }
+  // onRegister() {
+  //   this.trainService.createNewCustomer(this.registerObj).subscribe((res:APIResponse)=> {
+  //     if(res.result){
+  //       alert("New Registeration Success");
+  //     } else{
+  //       alert(res.message);
+  //     }
+  //   })
+  // }
 
-  onLogin(){
-    this.trainService.getLoginCustomer(this.loginObj).subscribe((res:APIResponse)=> {
-      if(res.result) {
-        alert("Login Success");
-        localStorage.setItem('trainApp', JSON.stringify(res.data));
-        this.loggedUserData = res.data
-      } else{
-        alert(res.message);
-      }
-    })
-  }
+  // onLogin(){
+  //   this.trainService.getLoginCustomer(this.loginObj).subscribe((res:APIResponse)=> {
+  //     if(res.result) {
+  //       alert("Login Success");
+  //       localStorage.setItem('trainApp', JSON.stringify(res.data));
+  //       // this.loggedUserData = res.data
+  //     } else{
+  //       alert(res.message);
+  //     }
+  //   })
+  // }
 
-  onLogOff(){
-      this.loggedUserData = new Customer();
-      localStorage.removeItem("")
-  }
+  // onLogOff(){
+  //     this.loggedUserData = new Customer();
+  //     localStorage.removeItem("")
+  // }
 
   openSingup() {
     const modal = document.getElementById("singUp");
