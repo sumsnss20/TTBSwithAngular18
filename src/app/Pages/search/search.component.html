@@ -1,73 +1,161 @@
 <div class="container">
+  <!-- Train searchinf fields Start -->
   <div class="row">
     <form>
       <div class="row">
         <div class="col-lg-3">
-          <select [(ngModel)]="searchData.fromStationId" name="fromStationId" id="fromStationId" class="form-select form-control">
+          <select [(ngModel)]="searchData.fromStationId" name="fromStationId" id="fromStationId"
+            class="form-select form-control">
             <option value="">From Station</option>
             @for (station of stationList; track $index) {
-              <option [value]="station.stationID">{{station.stationName}}</option>
+            <option [value]="station.stationID">{{station.stationName}}</option>
             }
           </select>
         </div>
         <div class="col-lg-3">
-          <select [(ngModel)]="searchData.toStationId" name="toStationId" id="toStationId" class="form-select form-control" >
+          <select [(ngModel)]="searchData.toStationId" name="toStationId" id="toStationId"
+            class="form-select form-control">
             <option value="">To Station</option>
             @for (station of stationList; track $index) {
-              <option [value]="station.stationID">{{station.stationName}}</option>
+            <option [value]="station.stationID">{{station.stationName}}</option>
             }
           </select>
         </div>
         <div class="col-lg-3">
-            <input [(ngModel)]="searchData.dateOfTravel" name="dateOfTravel" id="dateOfTravel" value="dateOfTravel" type="date" class="form-control"/>
+          <input [(ngModel)]="searchData.dateOfTravel" name="dateOfTravel" id="dateOfTravel" value="dateOfTravel"
+            type="date" class="form-control" />
         </div>
         <div class="col-lg-3">
           <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
             <button type="button" class="btn btn-primary" (click)="getsearchTrains()">Modify Search</button>
-          </div> 
+          </div>
         </div>
       </div>
       <div class="row">
-        
+
       </div>
     </form>
   </div>
+  <!-- Train searchinf fields End -->
+
+  <!-- Train searched results Start -->
   <div class="row">
-    <p> {{trainList.length}} Results found for {{searchData.fromStationId}} to {{searchData.toStationId}} on {{searchData.dateOfTravel | date:'dd-MM-yy'}}</p>
+    <p><b>{{trainList.length}} Results found for {{searchData.fromStationId}} to {{searchData.toStationId}} on
+      {{searchData.dateOfTravel | date:'dd-MM-yy'}}</b></p>
   </div>
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Train ID</th>
-            <th scope="col">Train Number</th>
-            <th scope="col">Train Name</th>
-            <th scope="col">Departure</th>
-            <th scope="col">Arrival</th>
-            <th scope="col">Departure Date</th>
-            <th scope="col">Departure Time</th>
-            <th scope="col">Arrival Time</th>
-            <th scope="col">Total Seats</th>
-            <th scope="col">Booked Seats</th>
-            <th scope="col">Book Now</th>
-          </tr>
-        </thead>
-        <tbody>
-            @for (item of trainList; track $index;) {
-                <tr>
-                    <td>{{item.trainId}}</td> 
-                    <td>{{item.trainNo}}</td>
-                    <td>{{item.trainName}}</td>
-                    <td>{{item.departureStationName}}</td>
-                    <td>{{item.arrivalStationName}}</td>
-                    <td>{{item.departureDate | date:'dd-MM-yy'}}</td>
-                    <td>{{item.departureTime}}</td>
-                    <td>{{item.arrivalTime}}</td>
-                    <td>{{item.totalSeats}}</td>
-                    <td>{{item.bookedSeats}}</td>
-                    <td><button type="button" class="btn btn-primary">BOOK NOW</button></td>
-                </tr>
-            }
-            
-        </tbody>
-      </table>
+  <table class="table">
+    <thead>
+      <tr>
+        <!-- <th scope="col">Train ID</th> -->
+        <th scope="col">Train Number</th>
+        <th scope="col">Train Name</th>
+        <th scope="col">Departure</th>
+        <th scope="col">Arrival</th>
+        <th scope="col">Departure Date</th>
+        <th scope="col">Departure Time</th>
+        <th scope="col">Arrival Time</th>
+        <th scope="col">Total Seats</th>
+        <th scope="col">Booked Seats</th>
+        <th scope="col">Book Now</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of trainList; track $index;) {
+      <tr>
+        <!-- <td>{{item.trainId}}</td> -->
+        <td>{{item.trainNo}}</td>
+        <td>{{item.trainName}}</td>
+        <td>{{item.departureStationName}}</td>
+        <td>{{item.arrivalStationName}}</td>
+        <td>{{item.departureDate | date:'dd-MM-yy'}}</td>
+        <td>{{item.departureTime}}</td>
+        <td>{{item.arrivalTime}}</td>
+        <td>{{item.totalSeats}}</td>
+        <td>{{item.bookedSeats}}</td>
+        <td><button type="button" class="btn btn-primary" (click)="openBookTicket(item)">BOOK NOW</button></td>
+      </tr>
+      }
+
+    </tbody>
+  </table>
 </div>
+<router-outlet />
+<!-- Train searched results End -->
+
+<!-- TicketBooking Modal Pop up Start -->
+<div class="modal" id="bookTicket">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h5 class="modal-title">Book Ticket</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="closeBookTicket()"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="row">
+          <div class="col text-center">
+          <b>Train No: {{selectedTrain?.trainNo}} - {{selectedTrain?.trainName}}</b>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col text-center">
+            <b>Departure at: {{selectedTrain?.departureDate | date:'dd-MM-yyyy'}} | {{selectedTrain?.departureTime}}</b>
+          </div>  
+        </div>
+        <div class="row pt-1">
+          <div class="col-6 mt-2">
+            <label for="">Passenger Name</label>
+            <input type="text" [(ngModel)]="passanger.passengerName" class="form-control">
+          </div>
+          <div class="col-3">
+            <label for="">Age</label>
+            <input type="text" [(ngModel)]="passanger.age" class="form-control">
+          </div>
+          <div class="col-3  text-end pt-4">
+            <button class="btn btn-sm btn-primary" (click)="AddPassenger()">Add</button>
+          </div>
+        </div>
+        <div class="row pt-1">
+          <div class="col-12">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Sr </th>
+                  <th>Passenger Name</th>
+                  <th>Age</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (item of passangerList; track $index) {
+                  <tr>
+                    <td>{{$index+1}}</td>
+                    <td>{{item.passengerName}}</td>
+                    <td>{{item.age}}</td>
+                    <td>
+                      <button class="btn btn-danger btn-sm" (click)="onRemove($index)">Remove</button>
+                    </td>
+                  </tr>
+                }
+               
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal" (click)="closeBookTicket()">Close</button>
+        <button type="button" class="btn btn-success btn-sm" (click)="BookTicket()">Book Ticket</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- TicketBooking Modal Pop up End -->

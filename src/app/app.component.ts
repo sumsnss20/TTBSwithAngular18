@@ -26,17 +26,13 @@ export class AppComponent {
   loginObj: LoginData = new LoginData();
 
 loggedUserData: Customer = new Customer();
-  constructor(@Inject(PLATFORM_ID) private platformid: object) {
-    // const localData = localStorage.getItem('MRTBS');
-    // if(localData != null) {
-    //   this.loggedUserData = JSON.parse(localData);
-    // }
-  } 
+  
 
   onRegister() {
     this.trainService.createNewCustomer(this.registerObj).subscribe((res:APIResponse)=> {
       if(res.result){
         alert("New Registeration Success");
+        this.closeSingup();
       } else{
         alert(res.message);
       }
@@ -44,11 +40,12 @@ loggedUserData: Customer = new Customer();
   }
 
   onLogin(){
-    this.trainService.getLoginCustomer(this.loginObj).subscribe((res:APIResponse)=> {
+    this.trainService.LoginCustomer(this.loginObj).subscribe((res:APIResponse)=> {
       if(res.result && isPlatformBrowser(this.platformid)) {
         alert("Login Success");
         localStorage.setItem('MRTBS', JSON.stringify(res.data));
         this.loggedUserData = res.data;
+        this.closeLogin();
       } else{
         alert(res.message);
       }
@@ -59,6 +56,13 @@ loggedUserData: Customer = new Customer();
       this.loggedUserData = new Customer();
       localStorage.removeItem("")
   }
+
+  constructor(@Inject(PLATFORM_ID) private platformid: object) {
+    // const localData = localStorage.getItem('MRTBS');
+    // if(localData != null) {
+    //   this.loggedUserData = JSON.parse(localData);
+    // }
+  } 
 
   openSingup() {
     const modal = document.getElementById("singUp");

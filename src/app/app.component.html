@@ -20,7 +20,7 @@
         <li class="nav-item"><a class="nav-link" (click)="openSingup()">Sign-Up</a></li>
        }
       @else {
-        <li class="nav-item"><a class="nav-link">{{loggedUserData.firstName}}</a></li>
+        <li class="nav-item"><a class="nav-link">{{loggedUserData.firstName}} {{loggedUserData.lastName}}</a></li>
         <li class="nav-item"><a class="nav-link" (click)="onLogOff()">Log OFF</a></li>
       }
     </ul>

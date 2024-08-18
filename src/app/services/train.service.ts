@@ -23,7 +23,11 @@ apiUrl: string = 'https://freeapi.miniprojectideas.com/api/TrainApp/';
   createNewCustomer(obj: Customer){
     return this.http.post<APIResponse>(`${this.apiUrl}AddUpdatePassengers`,obj)
   }
-  getLoginCustomer(obj: LoginData){
+  LoginCustomer(obj: LoginData){
     return this.http.post<APIResponse>(`${this.apiUrl}Login`,obj)
+  }
+
+  BookingCustomer(obj: any){
+    return this.http.post<APIResponse>(`${this.apiUrl}BookTrain`,obj)
   }
 }
