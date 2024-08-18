@@ -49,6 +49,19 @@ export interface ITrain {
     }
   }
 
+  export class LoginData {
+    passengerID: number;
+    phone: string;
+    password: string;
+
+
+    constructor(){
+        this.passengerID = 0;
+        this.phone = "";
+        this.password = "";
+    }
+  }
+
 
   export interface APIResponse {
     message: string;

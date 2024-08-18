@@ -1,11 +1,14 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, Inject, inject, input, PLATFORM_ID } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HomeComponent } from "./Pages/home/home.component";
 import { SearchComponent } from './Pages/search/search.component';
-import { APIResponse, Customer } from './models/train';
+import { APIResponse, Customer, LoginData } from './models/train';
 import { FormsModule } from '@angular/forms';
 import { TrainService } from './services/train.service';
 import { json } from 'stream/consumers';
+import { AsyncLocalStorage } from 'async_hooks';
+import { isPlatformBrowser, PlatformLocation } from '@angular/common';
+import { privateDecrypt } from 'crypto';
 
 @Component({
   selector: 'app-root',
@@ -17,52 +20,45 @@ import { json } from 'stream/consumers';
 export class AppComponent {
   title = 'MRTBS';
 
-  // registerObj: Customer = new Customer();
-  // trainService = inject(TrainService);
+  registerObj: Customer = new Customer();
+  trainService = inject(TrainService);
  
-  // loginObj: any = {
-  //   "phone": "",
-  //   "password": ""
-  // }
-//   loggedUser: Customer = new Customer();
-// constructor(){
-//   const localData =  localStorage.getItem('trainApp');
-// }
+  loginObj: LoginData = new LoginData();
 
-// loggedUserData: any;
-//   constructor() {
-//     const localData = localStorage.getItem("trainApp");
-//     if(localData != null) {
-//       this.loggedUserData = JSON.stringify(localData);
-//     }
-//   }
+loggedUserData: Customer = new Customer();
+  constructor(@Inject(PLATFORM_ID) private platformid: object) {
+    // const localData = localStorage.getItem('MRTBS');
+    // if(localData != null) {
+    //   this.loggedUserData = JSON.parse(localData);
+    // }
+  } 
 
-  // onRegister() {
-  //   this.trainService.createNewCustomer(this.registerObj).subscribe((res:APIResponse)=> {
-  //     if(res.result){
-  //       alert("New Registeration Success");
-  //     } else{
-  //       alert(res.message);
-  //     }
-  //   })
-  // }
+  onRegister() {
+    this.trainService.createNewCustomer(this.registerObj).subscribe((res:APIResponse)=> {
+      if(res.result){
+        alert("New Registeration Success");
+      } else{
+        alert(res.message);
+      }
+    })
+  }
 
-  // onLogin(){
-  //   this.trainService.getLoginCustomer(this.loginObj).subscribe((res:APIResponse)=> {
-  //     if(res.result) {
-  //       alert("Login Success");
-  //       localStorage.setItem('trainApp', JSON.stringify(res.data));
-  //       // this.loggedUserData = res.data
-  //     } else{
-  //       alert(res.message);
-  //     }
-  //   })
-  // }
+  onLogin(){
+    this.trainService.getLoginCustomer(this.loginObj).subscribe((res:APIResponse)=> {
+      if(res.result && isPlatformBrowser(this.platformid)) {
+        alert("Login Success");
+        localStorage.setItem('MRTBS', JSON.stringify(res.data));
+        this.loggedUserData = res.data;
+      } else{
+        alert(res.message);
+      }
+    })
+  }
 
-  // onLogOff(){
-  //     this.loggedUserData = new Customer();
-  //     localStorage.removeItem("")
-  // }
+  onLogOff(){
+      this.loggedUserData = new Customer();
+      localStorage.removeItem("")
+  }
 
   openSingup() {
     const modal = document.getElementById("singUp");

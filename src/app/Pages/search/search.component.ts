@@ -46,10 +46,20 @@ export class SearchComponent implements OnInit {
   }
 
   getsearchTrains(){
-    this.trainerService.getTrainSearch(this.searchData.fromStationId, this.searchData.toStationId, this.searchData.dateOfTravel).subscribe((res:any)=>{
-      debugger;
-      this.trainList = res.data;
-    })
+    if(this.searchData.fromStationId == 0 || this.searchData.toStationId == 0 || this.searchData.dateOfTravel == null){
+      alert("Please Select Journey Details");
   }
+  else {
+    if(this.searchData.fromStationId == this.searchData.toStationId) {
+      alert("Please give Valid Jorney Destails");
+    }
+    else
+    {
+      this.trainerService.getTrainSearch(this.searchData.fromStationId, this.searchData.toStationId, this.searchData.dateOfTravel).subscribe((res:any)=>{
+        this.trainList = res.data;
+      })
+    }
+  }
+}
 
 }

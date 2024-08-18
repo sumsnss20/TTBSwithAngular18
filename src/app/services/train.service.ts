@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { APIResponse, Customer } from '../models/train';
+import { APIResponse, Customer, LoginData } from '../models/train';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,7 @@ apiUrl: string = 'https://freeapi.miniprojectideas.com/api/TrainApp/';
   createNewCustomer(obj: Customer){
     return this.http.post<APIResponse>(`${this.apiUrl}AddUpdatePassengers`,obj)
   }
-  getLoginCustomer(obj: any){
-    return this.http.post<APIResponse>(`${this.apiUrl}login`,obj)
+  getLoginCustomer(obj: LoginData){
+    return this.http.post<APIResponse>(`${this.apiUrl}Login`,obj)
   }
 }
