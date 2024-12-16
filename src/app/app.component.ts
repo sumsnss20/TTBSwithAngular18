@@ -27,8 +27,11 @@ export class AppComponent {
 
 loggedUserData: Customer = new Customer();
   
-
-  onRegister() {
+onRegister() {
+    if(this.registerObj.password == '0'){
+      alert("Please Enter The Password")
+  }
+  else{
     this.trainService.createNewCustomer(this.registerObj).subscribe((res:APIResponse)=> {
       if(res.result){
         alert("New Registeration Success");
@@ -37,6 +40,8 @@ loggedUserData: Customer = new Customer();
         alert(res.message);
       }
     })
+  }
+    
   }
 
   onLogin(){

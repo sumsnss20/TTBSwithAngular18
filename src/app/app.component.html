@@ -1,27 +1,27 @@
 
-<div class="main">
+<div class="menu">
   <!--Header Section Start-->
 <div class="navbar">
   <div class="icon">
     <h2 class="logo">
-          MyRailways
+      <a href="#" class="nav-link active" aria-current="page" style="color: white;">MyTicket</a>
     </h2>
   </div>
 
-  <div class="menu">
+  <div class="">
     <ul class="nav nav-pills">
       <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
-      <li class="nav-item"><a href="#" class="nav-link">About</a></li>
-      <li class="nav-item"><a href="#" class="nav-link">Trains</a></li>
+      <li class="nav-item"><a href="#" class="nav-link" style="color: white;">About</a></li>
+      <li class="nav-item"><a href="#" class="nav-link" style="color: white;">Trains</a></li>
 
       <!-- Cart User Tickets-->
        @if(loggedUserData.passengerID == 0){
-        <li class="nav-item"><a class="nav-link" (click)="openLogin()">Login</a></li>
-        <li class="nav-item"><a class="nav-link" (click)="openSingup()">Sign-Up</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="openLogin()" style="color: white;">Login</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="openSingup()" style="color: white;">Sign-Up</a></li>
        }
       @else {
-        <li class="nav-item"><a class="nav-link">{{loggedUserData.firstName}} {{loggedUserData.lastName}}</a></li>
-        <li class="nav-item"><a class="nav-link" (click)="onLogOff()">Log OFF</a></li>
+        <li class="nav-item"><a class="nav-link" style="color: yellow;">{{loggedUserData.firstName}} {{loggedUserData.lastName}}</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="onLogOff()" style="color: yellow;">Log OFF</a></li>
       }
     </ul>
   </div>
@@ -68,7 +68,11 @@
           <div class="row">
             <div class="col-6">
               <label>Password</label>
-              <input type="text" [(ngModel)]="registerObj.password" name="psd" class="form-control">
+              <input type="password" [(ngModel)]="registerObj.password" name="psd" class="form-control">
+            </div>
+            <div class="col-6">
+              <label>Re-Enter Password</label>
+              <input type="password" name="repsd" class="form-control">
             </div>
           </div>
           
