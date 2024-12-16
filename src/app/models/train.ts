@@ -68,3 +68,5 @@ export interface ITrain {
     result: boolean;
     data: any;
   }
+
+  
